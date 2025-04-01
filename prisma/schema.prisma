@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(50)
+  email     String  @unique @db.VarChar(100)
+  username  String  @unique @db.VarChar(100)
+  senha     String  @db.Text
+  authToken String? @map("auth_Token") @db.Uuid
+
+  tweets    Tweet[]
+  likes     Like[]
+  retweets  Retweet[]
+  followers Follower[] @relation("Following")
+  following Follower[] @relation("Followers")
+  
+  @@map("usuario")
+}
+
+enum TweetType {
+  TWEET
+  RETWEET
+}
+
+model Tweet {
+  id       Int       @id @default(autoincrement())
+  conteudo String?   @db.VarChar(300)
+  tipo     TweetType
+  user     User      @relation(fields: [userId], references: [id])
+  userId   Int
+
+  likes    Like[]
+  retweets Retweet[]
+
+  @@map("tweets")
+}
+
+model Like {
+  user    User @relation(fields: [userId], references: [id])
+  userId  Int
+  tweet   Tweet @relation(fields: [tweetId], references: [id])
+  tweetId Int
+
+  @@unique([userId, tweetId])
+  @@map("likes")
+}
+
+model Retweet {
+  id      Int  @id @default(autoincrement())
+  user    User @relation(fields: [userId], references: [id])
+  userId  Int
+  tweet   Tweet @relation(fields: [tweetId], references: [id])
+  tweetId Int
+
+  @@unique([userId, tweetId])
+  @@map("retweets")
+}
+
+model Follower {
+  user       User @relation("Following", fields: [userId], references: [id])
+  userId     Int
+  follower   User @relation("Followers", fields: [followerId], references: [id])
+  followerId Int
+
+  @@unique([userId, followerId])
+  @@map("followers")
+}
