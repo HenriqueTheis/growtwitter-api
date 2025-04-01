@@ -7,3 +7,5 @@ export interface CadastrarUserDto {
   export interface ListarUsersDto {
     nome?: string;
   }
+
+  export type AtualizarUserDto = Partial<CadastrarUserDto> & { id: string };
