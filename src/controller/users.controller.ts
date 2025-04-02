@@ -7,6 +7,6 @@ export class UsersController {
     public async atualizarPorId(req: Request, res: Response): Promise<void> {}
     public async deletarPorId(req: Request, res: Response): Promise<void> {}
 
+//teste
 
-    
 }
