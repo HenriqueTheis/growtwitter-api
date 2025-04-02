@@ -4,13 +4,13 @@ import { TweetsController } from '../controller/twetts.controller';
 export class TweetsRoutes {
     public static bind(): Router {
         const router = Router();
-        const tweetsController = new TweetsController();
+        const controller = new TweetsController();
 
-        router.get("/tweets", tweetsController.listar);
-        router.get("/tweets/:id", tweetsController.obterPorId);
-        router.post("/tweets", tweetsController.criar);
-        router.put("/tweets/:id", tweetsController.atualizarPorId);
-        router.delete("/tweets/:id", tweetsController.deletarPorId);
+        router.get("/tweets", controller.listar);
+        router.get("/tweets/:id", controller.obterPorId);
+        router.post("/tweets", controller.criar);
+        router.put("/tweets/:id", controller.atualizarPorId);
+        router.delete("/tweets/:id", controller.deletarPorId);
 
         return router;
     }
