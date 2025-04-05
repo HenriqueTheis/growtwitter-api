@@ -17,7 +17,6 @@ app.get('/', (req, res, next) => {
 })
 
 app.use(UsersRoutes.bind());
-app.use(TweetsRoutes.bind());
 app.use(RetweetsRoutes.bind());
 app.use(LikesRoutes.bind());
 app.use(FollowersRoutes.bind());

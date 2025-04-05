@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { UsersController } from '../controller/users.controller';
+import { TweetsRoutes } from './tweets.routes';
 
 export class UsersRoutes {
     public static bind(): Router {
@@ -8,9 +9,11 @@ export class UsersRoutes {
         const userController = new UsersController();
      
         router.get("/users", userController.listar);        
-        router.get("/users/:id", userController.listarPorId);   
+        router.get("/users/:id", userController.ListarPorId);   
         router.post("/users", userController.cadastrar);      
         router.put("/users/:id", userController.atualizarPorId);    
+
+        router.use("aluno/:id", TweetsRoutes.bind());
 
         return router;
     }
