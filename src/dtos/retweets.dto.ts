@@ -1,4 +1,4 @@
-export interface toggleLikeDTO {
+export interface toggleRetweetDTO {
     userId: number;
     tweetId: number;
   }

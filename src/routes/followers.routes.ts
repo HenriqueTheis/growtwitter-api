@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { FollowersController } from "../controller/followers.controller"
+import { FollowersController } from "../controller/followers.controller";
+import { authMiddleware } from "../middleware/auth.middleware";
 
-export class FollowersRoutes{
+export class FollowersRoutes {
+  public static bind(): Router {
+    const router = Router();
 
-    public static bind(): Router{
-        const router = Router();
+    const followersController = new FollowersController();
 
-        const followersController = new FollowersController()
+    router.patch("/followers", authMiddleware, followersController.toggle);
 
-        router.patch("/followers", followersController.toggle);
-
-        return router
-    }
+    return router;
+  }
 }

@@ -24,7 +24,7 @@ export class UsersService {
       throw new HTTPError(409, "E-mail já cadastrado por outro usuário");
     }
 
-    const novoUser = await prismaClient.users.create({
+    const novoUsuario = await prismaClient.users.create({
       data: {
         name,
         email,
@@ -37,13 +37,11 @@ export class UsersService {
       },
     });
 
-    return novoUser;
+    return novoUsuario;
   }
 
-  public async listar({
-    name,
-  }: ListarUsersDto): Promise<UserParcial[]> {
-    const users = await prismaClient.users.findMany({
+  public async listar({ name }: ListarUsersDto): Promise<UserParcial[]> {
+    const usuarios = await prismaClient.users.findMany({
       where: {
         name: {
           contains: name,
@@ -56,11 +54,11 @@ export class UsersService {
       },
     });
 
-    return users;
+    return usuarios;
   }
 
   public async ListarPorId(id: number): Promise<UserParcial> {
-    const user = await prismaClient.users.findUnique({
+    const usuario = await prismaClient.users.findUnique({
       where: { id },
       omit: {
         authToken: true,
@@ -68,11 +66,11 @@ export class UsersService {
       },
     });
 
-    if (!user) {
+    if (!usuario) {
       throw new HTTPError(404, "Usuário não encontrado");
     }
 
-    return user;
+    return usuario;
   }
 
   public async atualizar({
@@ -82,7 +80,9 @@ export class UsersService {
     username,
     senha,
   }: AtualizarUsersDto): Promise<UserParcial> {
-    const userAtualizado = await prismaClient.users.update({
+    await this.ListarPorId(id);
+
+    const usuarioAtualizado = await prismaClient.users.update({
       where: { id },
       data: {
         name,
@@ -96,11 +96,13 @@ export class UsersService {
       },
     });
 
-    return userAtualizado;
+    return usuarioAtualizado;
   }
 
   public async excluir(id: number): Promise<UserParcial> {
-    const userExcluido = await prismaClient.users.delete({
+    await this.ListarPorId(id);
+
+    const usuarioExcluido = await prismaClient.users.delete({
       where: { id },
       omit: {
         authToken: true,
@@ -108,6 +110,6 @@ export class UsersService {
       },
     });
 
-    return userExcluido;
+    return usuarioExcluido;
   }
 }

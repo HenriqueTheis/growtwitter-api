@@ -60,7 +60,7 @@ export class UsersController {
       onError(error, res);
     }
   }
-
+ 
   public async atualizarPorId(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;

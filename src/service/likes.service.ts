@@ -1,11 +1,36 @@
+import { prismaClient } from "../database/prisma.client";
+import { toggleLikeDTO } from "../dtos/like.dto";
 
+export class LikesService {
+  public async toggleLike({ userId, tweetId }: toggleLikeDTO): Promise<string> {
+    const registroExiste = await prismaClient.like.findUnique({
+      where: {
+        userId_tweetId: {
+          userId,
+          tweetId,
+        },
+      },
+    });
 
-export class LikesService{
+    if (registroExiste) {
+      await prismaClient.like.delete({
+        where: {
+          userId_tweetId: {
+            userId,
+            tweetId,
+          },
+        },
+      });
+      return "Deslike realizado com sucesso";
+    }
 
-     public async listar(req: Request, res: Response): Promise<void> {}
-     public async criar(req: Request, res: Response): Promise<void> {
-        
-            
-        }
-        public async deletarPorId(req: Request, res: Response): Promise<void> {}
+    await prismaClient.like.create({
+      data: {
+        userId,
+        tweetId,
+      },
+    });
+
+    return "Like realizado com sucesso";
+  }
 }

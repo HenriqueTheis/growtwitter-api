@@ -1,7 +1,7 @@
 import { prismaClient } from "../database/prisma.client";
 import { toggleFollowerDTO } from "../dtos/followers.dto";
 import { HTTPError } from "../utils/http.error";
-
+ 
 export class FollowersService{
     public async toggleFollower({userId, followerId}: toggleFollowerDTO): Promise<string> {
         if(userId === followerId){

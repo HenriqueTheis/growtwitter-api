@@ -1,17 +1,14 @@
 import { Router } from "express";
 import { RetweetsController } from "../controller/retweets.controller";
+import { authMiddleware } from "../middleware/auth.middleware";
 
 export class RetweetsRoutes {
-    public static bind(): Router {
-        const router = Router();
+  public static bind(): Router {
+    const router = Router();
+    const retweetsController = new RetweetsController();
 
-        const retweetsController = new RetweetsController();
+    router.patch("/retweets", authMiddleware, retweetsController.toggle);
 
-        router.get("/retweets", retweetsController.listar);         
-        router.post("/retweets", retweetsController.criar);        
-        router.delete("/retweets/:id", retweetsController.deletarPorId);  
-
-        return router;
-    }
+    return router;
+  }
 }
-    

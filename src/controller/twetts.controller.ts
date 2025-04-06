@@ -41,13 +41,13 @@ export class TweetsController {
 
   public async cadastrar(req: Request, res: Response): Promise<void> {
     try {
-      const { conteudo, tipo, userId } = req.body;
+      const { conteudo, tipo } = req.body;
 
       const service = new TweetsService();
       const resultado = await service.cadastrar({
         conteudo,
         tipo,
-        userId: Number(userId),
+        userId: req.userLogado.id,
       });
 
       res.status(201).json({
