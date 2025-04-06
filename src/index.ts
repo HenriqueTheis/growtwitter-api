@@ -20,5 +20,5 @@ app.use(UsersRoutes.bind());
 app.use(RetweetsRoutes.bind());
 app.use(LikesRoutes.bind());
 app.use(FollowersRoutes.bind());
-
+app.use(TweetsRoutes.bind());
 app.listen(envs.PORT, () => console.log("Servidor rodando"))

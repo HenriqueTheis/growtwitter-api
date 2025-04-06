@@ -13,7 +13,6 @@ export class UsersRoutes {
         router.post("/users", userController.cadastrar);      
         router.put("/users/:id", userController.atualizarPorId);    
 
-        router.use("aluno/:id", TweetsRoutes.bind());
 
         return router;
     }

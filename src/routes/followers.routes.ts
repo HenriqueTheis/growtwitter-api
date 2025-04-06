@@ -8,9 +8,7 @@ export class FollowersRoutes{
 
         const followersController = new FollowersController()
 
-        router.get("/followers", followersController.listar);         
-        router.post("/followers", followersController.seguir);        
-        router.delete("/followers/:id", followersController.deletarPorId);  
+        router.patch("/followers", followersController.toggle);
 
         return router
     }

@@ -1,7 +1,19 @@
 import { Request, Response } from "express";
+import { onError } from "../utils/on-error";
 
 export class FollowersController {
-    public async listar(req: Request, res: Response): Promise<void> {}
-    public async seguir(req: Request, res: Response): Promise<void> {}
-    public async deletarPorId(req: Request, res: Response): Promise<void> {}
+    
+    public async toggle(req: Request, res: Response): Promise<void> {
+        try{
+            const user = req.userLogado.id
+            const { userId } = req.body;
+
+            res.status(200).json({
+                sucesso: true,
+                mensagem: "seguir ou add",
+            })
+        }catch(error){
+            onError(error, res);
+        }
+    }
 }
